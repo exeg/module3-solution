@@ -37,6 +37,7 @@ function NarrowItDownController(MenuSearchService, $scope) {
     menu.found = [];
     menu.getMenuItems = function (searchTerm) {
         $scope.errorMessage = false;
+        menu.found = [];
         if (searchTerm) {
             
                 
