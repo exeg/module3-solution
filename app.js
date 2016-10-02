@@ -36,7 +36,10 @@ function NarrowItDownController(MenuSearchService, $scope) {
     var menu = this;
     menu.found = [];
     menu.getMenuItems = function (searchTerm) {
-        
+        $scope.errorMessage = false;
+        if (searchTerm) {
+            
+                
     var promise = MenuSearchService.getMatchedMenuItems(searchTerm);
     promise.then(function (response) {
         if (response.length !== 0) {
@@ -47,6 +50,9 @@ function NarrowItDownController(MenuSearchService, $scope) {
             
         }
         })
+        } else {
+            $scope.errorMessage = "Nothing found"; 
+        }
     
   };
     
@@ -72,16 +78,14 @@ service.getMatchedMenuItems = function (searchTerm) {
         }).then(function (result) {
         // process result and only keep items that match
         var fs = [];
-        console.log(result.data);
         for (var i = 0; i < result.data.menu_items.length; i++) {
           var descr = result.data.menu_items[i].description;
-          if ((descr.toLowerCase()).indexOf(searchTerm) !== -1) {
+          if ((descr.toLowerCase()).indexOf(searchTerm.toLowerCase()) !== -1) {
             fs.push(result.data.menu_items[i]);
           }
         }
 
     // return processed items
-    console.log(fs);
     return fs;
 });
     
@@ -89,6 +93,6 @@ service.getMatchedMenuItems = function (searchTerm) {
     };
     
 
-    
+}
 
 })();
